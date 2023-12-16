@@ -1,6 +1,0 @@
-langchain==0.0.350
-Pillow==10.1.0
-Pillow==10.1.0
-pinecone_client==2.2.4
-streamlit==1.29.0
-streamlit_chat==0.1.1
