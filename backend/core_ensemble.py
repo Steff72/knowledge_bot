@@ -15,21 +15,27 @@ pinecone.init(api_key=os.getenv("PINECONE_API_KEY"), environment="gcp-starter")
 
 chat = ChatOpenAI(verbose=True, temperature=0, model="gpt-4")
 embeddings = OpenAIEmbeddings()
-docsearch = Pinecone.from_existing_index(
-    index_name="a340-index", embedding=embeddings
-)
+docsearch = Pinecone.from_existing_index(index_name="a340-index", embedding=embeddings)
 
-sources = ["data/EDW CSPM Rev37.pdf", "data/EDW FCOM A340 15SEP23.pdf", "data/EDW FCTM A340 01SEP23.pdf", "data/EDW OM A Rev50.pdf"]
+sources = [
+    "data/EDW CSPM Rev37.pdf",
+    "data/EDW FCOM A340 15SEP23.pdf",
+    "data/EDW FCTM A340 01SEP23.pdf",
+    "data/EDW OM A Rev50.pdf",
+]
 documents = []
 
 for source in sources:
-        loader = PyPDFLoader(source)
-        documents.extend(loader.load())
+    loader = PyPDFLoader(source)
+    documents.extend(loader.load())
 
 bm25_retriever = BM25Retriever.from_documents(documents)
 bm25_retriever.k = 5
 
-ensemble_retriever = EnsembleRetriever(retrievers=[bm25_retriever, docsearch.as_retriever(search_kwargs={"k": 5})], weights=[0.5, 0.5])
+ensemble_retriever = EnsembleRetriever(
+    retrievers=[bm25_retriever, docsearch.as_retriever(search_kwargs={"k": 5})],
+    weights=[0.5, 0.5],
+)
 
 
 def run_llm(query: str, chat_history: List[Dict[str, Any]] = []):

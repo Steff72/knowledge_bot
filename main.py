@@ -3,6 +3,8 @@ from backend.core import run_llm
 import streamlit as st
 from streamlit_chat import message
 
+from PIL import Image
+
 
 def create_sources_string(sources: set[str]) -> str:
     if not sources:
@@ -11,15 +13,16 @@ def create_sources_string(sources: set[str]) -> str:
     sources_list.sort()
     sources_string = "Sources:\n"
     for source in sources_list:
+        source = source.replace("Manuals/EDW", "")
         sources_string += source
     return sources_string
 
-from PIL import Image
-image = Image.open("banner_bot_1.png")
+
+st.set_page_config(page_title="Edelweiss Knowledge Bot", page_icon="🤖")
+
+st.header("Edelweiss Knowledge Bot")
+image = Image.open("banner/banner_wing.jpg")
 st.image(image)
-
-
-st.header("Edelweiss A340 Bot")
 
 if "user_promt_history" not in st.session_state:
     st.session_state["user_promt_history"] = []
@@ -38,7 +41,7 @@ with st.form("promt_input", clear_on_submit=True):
             generated_response = run_llm(
                 query=prompt, chat_history=st.session_state["chat_history"]
             )
-            # metadata={'page': 260.0, 'source': 'EDW FCTM A340 01SEP23.pdf'}
+
             sources = set(
                 [
                     f'{doc.metadata["source"][5:-4]} page {int(doc.metadata["page"])}\n'

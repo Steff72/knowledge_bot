@@ -20,6 +20,9 @@ streamlit-chat = "*"
 tqdm = "*"
 pypdf = "*"
 rank-bm25 = "*"
+tdqm = "*"
+chromadb = "*"
+langchain-community = "*"
 
 [dev-packages]
 
