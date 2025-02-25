@@ -6,7 +6,7 @@ from langchain_community.chat_models import ChatOpenAI
 from langchain.chains import ConversationalRetrievalChain
 from langchain_community.vectorstores import Chroma
 
-chat = ChatOpenAI(verbose=True, temperature=0, model="gpt-4o-mini")
+chat = ChatOpenAI(verbose=True, temperature=0, model="gpt-4o")
 embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
 persist_directory = "db"
 vectordb = Chroma(persist_directory=persist_directory, embedding_function=embeddings)
