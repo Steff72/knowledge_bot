@@ -1,27 +1,73 @@
-# EDW OM A bot
+# EDW Knowledge Bot
 
-shift&cmd P to select the python interpretor for the applicable environment
+## Aim
 
-pipenv shell to create&activate environment
-exit to exit environment
-pipenv install to install all modules in pipfile
-streamlit run main.py , ctrl c to stop
+This application serves as an interactive question-answering bot for your Engineering Data Warehouse (EDW) manuals. It retrieves relevant content from a vector database built on your PDF manuals and leverages a large language model (LLM) to provide concise, context-aware answers.
 
+## Project Structure
 
-try:
-from langchain.text_splitter import LatexTextSplitter
-latex_text = "..."
-latex_splitter = LatexTextSplitter(chunk_size=100, chunk_overlap=0)
-docs = latex_splitter.create_documents([latex_text])
+```
+EDW Knowledge Bot/
+├── data/
+│   ├── Manuals/           # Place all PDF manuals here
+│   └── ingestion_chroma.py # Script to ingest manuals into Chroma
+├── db/                    # Chroma database directory (auto-created)
+├── main.py                # Streamlit app entrypoint
+├── core.py                # Query runner and LLM integration
+├── ingestion_chroma.py    # (alternate path) Data ingestion script
+├── README.md              # This README file
+└── Pipfile                # Pipenv dependency file
+```
 
-Selecting a Range of Chunk Sizes - Once your data is preprocessed, the next step is to choose a range of potential chunk sizes to test. As mentioned previously, the choice should take into account the nature of the content (e.g., short messages or lengthy documents), the embedding model you’ll use, and its capabilities (e.g., token limits). The objective is to find a balance between preserving context and maintaining accuracy. Start by exploring a variety of chunk sizes, including smaller chunks (e.g., 128 or 256 tokens) for capturing more granular semantic information and larger chunks (e.g., 512 or 1024 tokens) for retaining more context.
+## Setup
 
-text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+1. Create a `.env` file in the project root containing your OpenAI API key:
 
-https://betterprogramming.pub/building-a-multi-document-reader-and-chatbot-with-langchain-and-chatgpt-d1864d47e339
+   ```bash
+   OPENAI_API_KEY="sk-..."
+   ```
 
-https://www.activeloop.ai/resources/data-chad-an-ai-app-with-lang-chain-deep-lake-to-chat-with-any-data/
+   Ensure the key is loaded into the environment (e.g., via `python-dotenv`).
+2. Install dependencies and activate the virtual environment using Pipenv:
 
-https://www.activeloop.ai/resources/ultimate-guide-to-lang-chain-deep-lake-build-chat-gpt-to-answer-questions-on-your-financial-data/
+   ```bash
+   pipenv install       # installs dependencies from Pipfile
+   pipenv shell         # activates the environment
+   ```
 
-https://betterprogramming.pub/youtube-chatbot-using-langchain-and-openai-f8faa8f34929
+## Data Ingestion
+
+Whenever you add or update PDF manuals in `data/Manuals/`, run:
+
+```bash
+python data/ingestion_chroma.py
+```
+
+This will:
+
+* Load and split all PDFs into text chunks.
+* Embed chunks in batches (with rate-limit respect) into a Chroma vector store.
+* Auto-persist the vector store in `db/`.
+
+## Running the App
+
+Launch the Streamlit interface with:
+
+```bash
+streamlit run main.py
+```
+
+Open the displayed local URL in your browser to start chatting with the bot.
+
+## Configuration
+
+* **History reset**: The conversation history resets after 5 turns by default. You can adjust this limit in `main.py`.
+* **Chroma parameters**: Modify batch size, chunk size, or embedding model in `data/ingestion_chroma.py`.
+
+## Contributing
+
+Feel free to open issues or pull requests to improve functionality, add new features, or fix bugs.
+
+## License
+
+MIT License. See [LICENSE](LICENSE) for details.

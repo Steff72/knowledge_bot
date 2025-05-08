@@ -22,6 +22,8 @@ pypdf = "*"
 rank-bm25 = "*"
 tdqm = "*"
 chromadb = "*"
+langchain-openai = "*"
+langchain-chroma = "*"
 langchain-community = "*"
 
 [dev-packages]
