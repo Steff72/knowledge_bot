@@ -1,4 +1,8 @@
-from backend.core import run_llm
+# for chroma db
+#from backend.core import run_llm
+
+# for pinecone db
+from backend.core_pinecone import run_llm
 
 import streamlit as st
 from streamlit_chat import message

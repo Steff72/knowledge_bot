@@ -9,7 +9,6 @@ beautifulsoup4 = "*"
 black = "*"
 tiktoken = "*"
 openai = "*"
-pinecone-client = "*"
 unstructured = "*"
 nltk = "*"
 fastapi = "*"
@@ -27,6 +26,8 @@ langchain-chroma = "*"
 langchain-community = "*"
 requests = "*"
 urllib3 = "*"
+pinecone = "*"
+langchain-pinecone = "*"
 
 [dev-packages]
 
