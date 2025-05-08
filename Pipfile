@@ -25,6 +25,8 @@ chromadb = "*"
 langchain-openai = "*"
 langchain-chroma = "*"
 langchain-community = "*"
+requests = "*"
+urllib3 = "*"
 
 [dev-packages]
 
