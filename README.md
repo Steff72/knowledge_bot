@@ -2,7 +2,7 @@
 
 ## Aim
 
-This application serves as an interactive question-answering bot for your Engineering Data Warehouse (EDW) manuals. It retrieves relevant content from a vector database built on your PDF manuals and leverages a large language model (LLM) to provide concise, context-aware answers.
+This application serves as an interactive question-answering bot. It retrieves relevant content from a vector database built on your PDF manuals and leverages a large language model (LLM) to provide concise, context-aware answers.
 
 ## Project Structure
 
@@ -63,10 +63,6 @@ Open the displayed local URL in your browser to start chatting with the bot.
 
 * **History reset**: The conversation history resets after 5 turns by default. You can adjust this limit in `main.py`.
 * **Chroma parameters**: Modify batch size, chunk size, or embedding model in `data/ingestion_chroma.py`.
-
-## Contributing
-
-Feel free to open issues or pull requests to improve functionality, add new features, or fix bugs.
 
 ## License
 
